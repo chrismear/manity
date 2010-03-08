@@ -1,0 +1,14 @@
+MANITY = {
+  'HEWORDS' : [
+    'punching',
+    'testosterone',
+    'jet fighters',
+    'bacon',
+    'bbq',
+    'beer',
+    'explosion',
+    'old spice'
+  ],
+  
+  'flickrApiKey' : '01234567890abcdef01234567890abcd'
+};

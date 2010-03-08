@@ -30,7 +30,7 @@
          url('LeagueGothic.otf') format('opentype');
 }
 body {
-  background-color: #1e1e1e;
+  background-color: #050505;
   font-family: 'League Gothic', Helvetica, Arial, sans-serif;
   font-size: normal;
   color: #ed1a07;
@@ -90,22 +90,23 @@ h2 {
   top: 6em;
   left: 0;
   overflow: hidden;
-  background-color: red;
-  padding: 4px 0;
+  padding: 4px 0 8px;
 }
-/* height between 55 and 110 */
 .PINT {
-/*  height: 55px;
-*/  width: 3300px;
+  width: 3300px;
   padding: 4px 0;
 }
+/* from 27 to 41 */
 .BBQ {
   height: 55px;
   width: 300px;
   margin: 0 8px 0 0;
   padding: 3px;
-  background-color: green;
+  background-color: #414141;
   float: left;
+  background-position: center;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(39, 39, 39, 1)), to(rgba(65, 65, 65, 1)));
+  background-image: -moz-linear-gradient(rgba(39, 39, 39, 1) 0%, rgba(65, 65, 65, 1) 100%);
 }
 .OLD-SPICE {
   clear: left;
