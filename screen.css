@@ -1,0 +1,81 @@
+@font-face {
+  font-family: 'ChunkFive';
+  src: url('Chunkfive.eot');
+  src: local('ChunkFive'), 
+         url('Chunkfive.otf') format('opentype');
+}
+@font-face {
+  font-family: 'League Gothic';
+  src: url('LeagueGothic.eot');
+  src: local('League Gothic'), 
+         url('LeagueGothic.otf') format('opentype');
+}
+body {
+  background-color: #1e1e1e;
+  font-family: 'League Gothic', Helvetica, Arial, sans-serif;
+  font-size: normal;
+  color: #ed1a07;
+  letter-spacing: 0.06em;
+}
+
+.ENERGYLEGS {
+  color: #ed1a07;
+}
+.BACON {
+  color: #794752;
+}
+.JETFIGHTERS {
+  color: #8d97af;
+}
+.PUNCHING {
+  color: #a3693b
+}
+
+#FOOTBALL {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+h1 {
+  font-family: ChunkFive, Helvetica, Arial, sans-serif;
+  font-size: 3em;
+  font-weight: normal;
+  letter-spacing: 0.15em;
+  margin: 15px 0 0 15px;
+  padding: 0;
+}
+h2 {
+  color: #999999;
+  font-weight: normal;
+  margin: 0 0 0 35px;
+  padding: 0;
+  font-size: 1.2em;
+}
+#BEER {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+#BEER .IS-GREAT {
+  text-align: right;
+  color: #999999;
+  font-weight: normal;
+  margin: 25px 15px 0 0;
+  padding: 0;
+  font-size: 1.2em;
+}
+#MANTAGE {
+  height: 510px;
+  width: 100%;
+  position: absolute;
+  top: 6em;
+  left: 0;
+  overflow: hidden;
+  background-color: red;
+}
+/* height between 55 and 110 */
+.entry {
+  height: 55px;
+  margin: 8px;
+  padding: 3px;
+}
