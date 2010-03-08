@@ -45,20 +45,24 @@ $(document).ready(function () {
   });
   goManityGo('hewords');
   
-
-  tags = MANITY.HEWORDS.join(',');
-  url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + MANITY.flickrApiKey + "&format=json&per_page=50&media=photos&tags=" + escape(tags) + "&jsoncallback=?";
-  $.getJSON(url, function (data) {
-    if (data.stat == "ok") {
-      $.each(data.photos.photo, function (photoIndex, photo) {
-        MANITY.things.push({
-          kind : 'photo',
-          url : "http://farm" + photo.farm + ".static.flickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg"
+  tagIndex = 0;
+  tagSlice = [];
+  while ((tagSlice = MANITY.HEWORDS.slice(tagIndex, tagIndex + 10)).length > 0) {
+    tags = tagSlice.join(',');
+    url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + MANITY.flickrApiKey + "&format=json&per_page=50&media=photos&tags=" + escape(tags) + "&jsoncallback=?";
+    $.getJSON(url, function (data) {
+      if (data.stat == "ok") {
+        $.each(data.photos.photo, function (photoIndex, photo) {
+          MANITY.things.push({
+            kind : 'photo',
+            url : "http://farm" + photo.farm + ".static.flickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg"
+          });
         });
-      });
-    }
-    goManityGo('photos');
-  });
+      }
+      goManityGo('photos');
+    });
+    tagIndex += 10;
+  }
   
   // http://search.twitter.com/search.json?&q=&lang=en&rpp=50&callback=?
   hewordIndex = 0;
@@ -67,7 +71,6 @@ $(document).ready(function () {
   lastTwitterQueryEscaped = "";
   while (hewordIndex <= MANITY.HEWORDS.length) {
     if (twitterQueryEscaped.length > 140 || hewordIndex == (MANITY.HEWORDS.length)) {
-      console.log('TWITTER: querying: ' + lastTwitterQueryEscaped);
       url = "http://search.twitter.com/search.json?&q=" + lastTwitterQueryEscaped + "&lang=en&rpp=10&callback=?";
       $.getJSON(url, function (data) {
         if (data.results) {
@@ -85,7 +88,6 @@ $(document).ready(function () {
       twitterQuery = "";
     }
     lastTwitterQueryEscaped = twitterQueryEscaped;
-    console.log("TWITTER: adding: " + MANITY.HEWORDS[hewordIndex]);
     twitterQuery = twitterQuery + MANITY.HEWORDS[hewordIndex] + " OR ";
     twitterQuery = twitterQuery.slice(0, -4);
     twitterQueryEscaped = escape(twitterQuery);
