@@ -96,7 +96,6 @@ h2 {
   width: 3300px;
   padding: 4px 0;
 }
-/* from 27 to 41 */
 .BBQ {
   height: 55px;
   width: 300px;
@@ -107,6 +106,11 @@ h2 {
   background-position: center;
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(39, 39, 39, 1)), to(rgba(65, 65, 65, 1)));
   background-image: -moz-linear-gradient(rgba(39, 39, 39, 1) 0%, rgba(65, 65, 65, 1) 100%);
+  overflow: hidden;
+}
+.BBQ.heword {
+  font-size: 4em;
+  padding: 8px 3px 3px 8px;
 }
 .OLD-SPICE {
   clear: left;
