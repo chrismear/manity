@@ -112,6 +112,20 @@ h2 {
   font-size: 4em;
   padding: 8px 3px 3px 8px;
 }
+.BBQ.tweet p {
+  width: 252px;
+  margin: 0;
+  padding: 8px 8px 8px 40px;
+  background-image: url(twitter.png);
+  background-position: 15px 8px;
+  background-repeat: no-repeat;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.8em;
+}
+.BBQ.tweet p span.text {
+  color: #dddddd;
+  font-weight: bold;
+}
 .OLD-SPICE {
   clear: left;
 }

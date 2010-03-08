@@ -45,7 +45,6 @@ $(document).ready(function () {
   });
   goManityGo('hewords');
   
-  // http://api.flickr.com/services/rest/?method=flickr.photos.search&format=json
 
   tags = MANITY.HEWORDS.join(',');
   url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + MANITY.flickrApiKey + "&format=json&per_page=50&media=photos&tags=" + escape(tags) + "&jsoncallback=?";
@@ -60,30 +59,68 @@ $(document).ready(function () {
     }
     goManityGo('photos');
   });
-
+  
+  // http://search.twitter.com/search.json?&q=&lang=en&rpp=50&callback=?
+  hewordIndex = 0;
+  twitterQuery = "";
+  twitterQueryEscaped = "";
+  lastTwitterQueryEscaped = "";
+  while (hewordIndex <= MANITY.HEWORDS.length) {
+    if (twitterQueryEscaped.length > 140 || hewordIndex == (MANITY.HEWORDS.length)) {
+      console.log('TWITTER: querying: ' + lastTwitterQueryEscaped);
+      url = "http://search.twitter.com/search.json?&q=" + lastTwitterQueryEscaped + "&lang=en&rpp=10&callback=?";
+      $.getJSON(url, function (data) {
+        if (data.results) {
+          $.each(data.results, function (tweetIndex, tweet) {
+            MANITY.things.push({
+              'kind' : 'tweet',
+              'text' : tweet['text'],
+              'author' : tweet.from_user
+            });
+          });
+          goManityGo('tweets');
+        }
+      });
+      lastTwitterQueryEscaped = "";
+      twitterQuery = "";
+    }
+    lastTwitterQueryEscaped = twitterQueryEscaped;
+    console.log("TWITTER: adding: " + MANITY.HEWORDS[hewordIndex]);
+    twitterQuery = twitterQuery + MANITY.HEWORDS[hewordIndex] + " OR ";
+    twitterQuery = twitterQuery.slice(0, -4);
+    twitterQueryEscaped = escape(twitterQuery);
+    twitterQuery += " OR ";
+    hewordIndex++;
+  }
   
   function goManityGo (kind) {
     MANITY.readies.push(kind);
-    if (MANITY.readies.length >= 2) {
+    // if (MANITY.readies.length >= 2) {
       thingLength = MANITY.things.length;
       $.each(MANITY.bbqs, function (bbqIndex, bbq) {
         thingIndex = Math.floor(Math.random() * thingLength);
         thing = MANITY.things[thingIndex];
-        $(bbq).removeClass('heword photo');
+        $(bbq).removeClass('heword photo tweet');
         $.each(MANITY.colorClasses, function (i, colorClass) {$(bbq).removeClass(colorClass)});
+        $(bbq).addClass(MANITY.colorClasses[Math.floor(Math.random() * MANITY.colorClasses.length)]);
         $(bbq).css('backgroundImage', MANITY.originalBackgroundImage);
         switch(thing.kind)
         {
         case 'photo':
+          $(bbq).html('');
           $(bbq).addClass('photo');
           $(bbq).css('background-image', 'url(' + thing.url + ')');
           break;
         case 'heword':
           $(bbq).addClass('heword');
-          $(bbq).addClass(MANITY.colorClasses[Math.floor(Math.random() * MANITY.colorClasses.length)]);
           $(bbq).html('<p>' + thing.heword + '</p>')
+          break;
+        case 'tweet':
+          $(bbq).addClass('tweet');
+          $(bbq).html('<p><span class="author">' + thing.author + '</span> <span class="text">' + thing['text'] + '</span></p>')
+          break;
         }
       });
-    }
+    // }
   }
 });
