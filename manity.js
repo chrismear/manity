@@ -93,7 +93,7 @@ $(document).ready(function () {
       twitterQuery = "";
     }
     lastTwitterQueryEscaped = twitterQueryEscaped;
-    twitterQuery = twitterQuery + MANITY.HEWORDS[hewordIndex] + " OR ";
+    twitterQuery = twitterQuery + '"' + MANITY.HEWORDS[hewordIndex] + '" OR ';
     twitterQuery = twitterQuery.slice(0, -4);
     twitterQueryEscaped = escape(twitterQuery);
     twitterQuery += " OR ";
