@@ -49,13 +49,15 @@ $(document).ready(function () {
   tagSlice = [];
   while ((tagSlice = MANITY.HEWORDS.slice(tagIndex, tagIndex + 10)).length > 0) {
     tags = tagSlice.join(',');
-    url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + MANITY.flickrApiKey + "&format=json&per_page=50&media=photos&tags=" + escape(tags) + "&jsoncallback=?";
+    url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + MANITY.flickrApiKey + "&format=json&per_page=15&media=photos&tags=" + escape(tags) + "&jsoncallback=?";
     $.getJSON(url, function (data) {
       if (data.stat == "ok") {
         $.each(data.photos.photo, function (photoIndex, photo) {
           MANITY.things.push({
             kind : 'photo',
-            url : "http://farm" + photo.farm + ".static.flickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg"
+            url : "http://farm" + photo.farm + ".static.flickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg",
+            title : photo['title'],
+            owner_id : photo.owner
           });
         });
       }
@@ -71,14 +73,15 @@ $(document).ready(function () {
   lastTwitterQueryEscaped = "";
   while (hewordIndex <= MANITY.HEWORDS.length) {
     if (twitterQueryEscaped.length > 140 || hewordIndex == (MANITY.HEWORDS.length)) {
-      url = "http://search.twitter.com/search.json?&q=" + lastTwitterQueryEscaped + "&lang=en&rpp=10&callback=?";
+      url = "http://search.twitter.com/search.json?&q=" + lastTwitterQueryEscaped + "&lang=en&rpp=20&callback=?";
       $.getJSON(url, function (data) {
         if (data.results) {
           $.each(data.results, function (tweetIndex, tweet) {
             MANITY.things.push({
               'kind' : 'tweet',
               'text' : tweet['text'],
-              'author' : tweet.from_user
+              'author' : tweet.from_user,
+              'timestamp' : tweet.created_at
             });
           });
           goManityGo('tweets');
@@ -97,7 +100,7 @@ $(document).ready(function () {
   
   function goManityGo (kind) {
     MANITY.readies.push(kind);
-    // if (MANITY.readies.length >= 2) {
+    if (MANITY.readies.length >= 2) {
       thingLength = MANITY.things.length;
       $.each(MANITY.bbqs, function (bbqIndex, bbq) {
         thingIndex = Math.floor(Math.random() * thingLength);
@@ -111,18 +114,30 @@ $(document).ready(function () {
         case 'photo':
           $(bbq).html('');
           $(bbq).addClass('photo');
+          $(bbq).html('<div class="CONDIMENT"><h3>' + thing['title'] + '</h3><p class="flickr"></p></div>');
+          $.getJSON("http://api.flickr.com/services/rest/?method=flickr.people.getInfo&api_key=" + MANITY.flickrApiKey + "&format=json&user_id=" + thing.owner_id + "&jsoncallback=?", function (data) {
+            if (data.stat == "ok") {
+              $(bbq).find('.CONDIMENT p.flickr').html(data.person.username._content);
+            }
+          });
           $(bbq).css('background-image', 'url(' + thing.url + ')');
           break;
         case 'heword':
           $(bbq).addClass('heword');
-          $(bbq).html('<p>' + thing.heword + '</p>')
+          $(bbq).html('<div class="CONDIMENT">' + thing.heword + '</div><p>' + thing.heword + '</p>')
           break;
         case 'tweet':
           $(bbq).addClass('tweet');
-          $(bbq).html('<p><span class="author">' + thing.author + '</span> <span class="text">' + thing['text'] + '</span></p>')
+          $(bbq).html('<div class="CONDIMENT"><h3>from Twitter</h3><p>' + thing.author + '</p></div><p><span class="author">' + thing.author + '</span> <span class="text">' + thing['text'] + '</span></p>')
           break;
         }
       });
-    // }
+    }
   }
+  
+  $('.BBQ').hover(function (event) {
+    $(this).children('.CONDIMENT').css('padding-top', '15px').css('opacity', 0).animate({'padding-top': 0, opacity: 0.8}, 'fast');
+  }, function (event) {
+    $(this).children('.CONDIMENT').css('padding-top', 0).css('opacity', 0.8).animate({'padding-top': '15px', opacity: 0});
+  });
 });

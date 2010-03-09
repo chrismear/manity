@@ -97,22 +97,23 @@ h2 {
   padding: 4px 0;
 }
 .BBQ {
-  height: 55px;
   width: 300px;
   margin: 0 8px 0 0;
-  padding: 3px;
   background-color: #414141;
   float: left;
   background-position: center;
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(39, 39, 39, 1)), to(rgba(65, 65, 65, 1)));
   background-image: -moz-linear-gradient(rgba(39, 39, 39, 1) 0%, rgba(65, 65, 65, 1) 100%);
   overflow: hidden;
+  position: relative;
 }
 .BBQ.heword {
   font-size: 4em;
+}
+.BBQ.heword p {
   padding: 8px 3px 3px 8px;
 }
-.BBQ.tweet p {
+.BBQ.tweet>p {
   width: 252px;
   margin: 0;
   padding: 8px 8px 8px 40px;
@@ -123,9 +124,33 @@ h2 {
   font-size: 0.8em;
 }
 .BBQ.tweet p span.text {
-  color: #dddddd;
+  color: #eeeeee;
   font-weight: bold;
 }
+
+.BBQ .CONDIMENT {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 110px;
+  opacity: 0;
+  background-color: #050505;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1em
+}
+.BBQ.heword .CONDIMENT {
+  font-size: 0.25em;
+}
+.BBQ.tweet .CONDIMENT {
+  font-size: 1.25em;
+}
+.BBQ.photo .CONDIMENT p {
+  font-weight: normal;
+  color: #eeeeee;
+}
+
+
 .OLD-SPICE {
   clear: left;
 }
