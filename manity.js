@@ -57,7 +57,8 @@ $(document).ready(function () {
             kind : 'photo',
             url : "http://farm" + photo.farm + ".static.flickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg",
             title : photo['title'],
-            owner_id : photo.owner
+            owner_id : photo.owner,
+            page_url : "http://flickr.com/photos/" + photo.owner + "/" + photo['id']
           });
         });
       }
@@ -81,7 +82,8 @@ $(document).ready(function () {
               'kind' : 'tweet',
               'text' : tweet['text'],
               'author' : tweet.from_user,
-              'timestamp' : tweet.created_at
+              'timestamp' : tweet.created_at,
+              'url' : "http://twitter.com/" + tweet.from_user + "/status/" + tweet['id']
             });
           });
           goManityGo('tweets');
@@ -114,7 +116,7 @@ $(document).ready(function () {
         case 'photo':
           $(bbq).html('');
           $(bbq).addClass('photo');
-          $(bbq).html('<div class="CONDIMENT"><h3>' + thing['title'] + '</h3><p class="flickr"></p></div>');
+          $(bbq).html('<div class="CONDIMENT"><a href="' + thing.page_url + '"></a><h3>' + thing['title'] + '</h3><p class="flickr"></p></div>');
           $.getJSON("http://api.flickr.com/services/rest/?method=flickr.people.getInfo&api_key=" + MANITY.flickrApiKey + "&format=json&user_id=" + thing.owner_id + "&jsoncallback=?", function (data) {
             if (data.stat == "ok") {
               $(bbq).find('.CONDIMENT p.flickr').html(data.person.username._content);
@@ -128,7 +130,7 @@ $(document).ready(function () {
           break;
         case 'tweet':
           $(bbq).addClass('tweet');
-          $(bbq).html('<div class="CONDIMENT"><h3>from Twitter</h3><p>' + thing.author + '</p></div><p><span class="author">' + thing.author + '</span> <span class="text">' + thing['text'] + '</span></p>')
+          $(bbq).html('<div class="CONDIMENT"><a href="' + thing.url + '"></a><h3>from Twitter</h3><p>' + thing.author + '</p></div><p><span class="author">' + thing.author + '</span> <span class="text">' + thing['text'] + '</span></p>')
           break;
         }
       });
