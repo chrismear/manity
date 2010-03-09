@@ -116,7 +116,7 @@ $(document).ready(function () {
         case 'photo':
           $(bbq).html('');
           $(bbq).addClass('photo');
-          $(bbq).html('<div class="CONDIMENT"><a href="' + thing.page_url + '"></a><h3>' + thing['title'] + '</h3><p class="flickr"></p></div>');
+          $(bbq).html('<div class="CONDIMENT"><a href="' + thing.page_url + '" target="_blank"></a><h3>' + thing['title'] + '</h3><p class="flickr"></p></div>');
           $.getJSON("http://api.flickr.com/services/rest/?method=flickr.people.getInfo&api_key=" + MANITY.flickrApiKey + "&format=json&user_id=" + thing.owner_id + "&jsoncallback=?", function (data) {
             if (data.stat == "ok") {
               $(bbq).find('.CONDIMENT p.flickr').html(data.person.username._content);
@@ -130,7 +130,7 @@ $(document).ready(function () {
           break;
         case 'tweet':
           $(bbq).addClass('tweet');
-          $(bbq).html('<div class="CONDIMENT"><a href="' + thing.url + '"></a><h3>from Twitter</h3><p>' + thing.author + '</p></div><p><span class="author">' + thing.author + '</span> <span class="text">' + thing['text'] + '</span></p>')
+          $(bbq).html('<div class="CONDIMENT"><a href="' + thing.url + '" target="_blank"></a><h3>from Twitter</h3><p>' + thing.author + '</p></div><p><span class="author">' + thing.author + '</span> <span class="text">' + thing['text'] + '</span></p>')
           break;
         }
       });
@@ -143,3 +143,5 @@ $(document).ready(function () {
     $(this).children('.CONDIMENT').css('padding-top', 0).css('opacity', 0.8).animate({'padding-top': '15px', opacity: 0});
   });
 });
+
+/* WHISKY */
