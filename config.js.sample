@@ -1,5 +1,6 @@
 MANITY = {
   'HEWORDS' : [
+    'manity',
     'punching',
     'testosterone',
     'jet fighters',
@@ -7,7 +8,32 @@ MANITY = {
     'bbq',
     'beer',
     'explosion',
-    'old spice'
+    'old spice',
+    'chopping wood',
+    'mantage',
+    'guitars',
+    'weightlifting',
+    'barbecue',
+    'steak',
+    'curry',
+    'hammer',
+    'pipewrench',
+    'whisky',
+    'whiskey',
+    'beard',
+    'mustache',
+    'lumberjack',
+    'james bond',
+    'secret agent',
+    'squinting',
+    'blacksmith',
+    'cigar',
+    'transformers',
+    'fire',
+    'bullfight',
+    'rockets',
+    'lego',
+    'dynamite'
   ],
   
   'flickrApiKey' : '01234567890abcdef01234567890abcd'
